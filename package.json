@@ -1,0 +1,14 @@
+{
+  "name": "hexnut-with-observable",
+  "version": "0.0.1",
+  "description": "Hexnut middleware for working with Observables",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Francis Stokes",
+  "license": "MIT",
+  "peerDependencies": {
+    "rxjs": "^6.0.0"
+  }
+}
