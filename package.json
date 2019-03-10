@@ -1,6 +1,6 @@
 {
   "name": "hexnut-with-observable",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Hexnut middleware for working with Observables",
   "main": "index.js",
   "scripts": {
