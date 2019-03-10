@@ -10,5 +10,8 @@
   "license": "MIT",
   "peerDependencies": {
     "rxjs": "^6.0.0"
+  },
+  "dependencies": {
+    "rxjs": "^6.4.0"
   }
 }

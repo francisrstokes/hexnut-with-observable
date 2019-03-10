@@ -15,7 +15,7 @@ npm i hexnut-with-observable
 ```javascript
 
 const Hexnut = require('hexnut');
-const withObservable = require('hexnut-with-observable');
+const {withObservable, filterMessages} = require('hexnut-with-observable');
 
 const { tap, filter } = require('rxjs/operators');
 const { pipe } = require('rxjs');
@@ -31,18 +31,67 @@ app.use(withObservable(pipe(
   }),
 
   // Filter to only messages
-  filter(({ctx}) => ctx.isMessage),
+  filterMessages(msg => msg !== 'skip'),
 
   // Process messages
-  tap(({ctx, next}) => {
-    if (ctx.message !== 'skip') {
-      ctx.send(`You sent: ${ctx.message}`);
-      return;
-    }
-    next();
+  tap(({ctx}) => {
+    ctx.send(`You sent: ${ctx.message}`);
   })
 )));
 
 
 app.start();
+```
+
+## Utility operators
+
+### Filter Messages
+
+**filterMessages(predicateFn)**
+
+Filters to messages that pass the predicate function. Automatically calls the `next()` middleware if event is not a message or does not pass.
+
+#### Example
+
+```javascript
+app.use(withObservable(pipe(
+  filterMessages(msg => msg.startsWith('!')),
+  tap(({ctx}) => {
+    ctx.send('Only messages beginning with a ! get here');
+  })
+)));
+```
+
+### Filter Connections
+
+*filterConnections*
+
+Filters connections. Automatically calls the `next()` middleware if event is not a connection.
+
+#### Example
+
+```javascript
+app.use(withObservable(pipe(
+  filterConnections,
+  tap(({ctx}) => {
+    ctx.send('This is a connection event.');
+  })
+)));
+```
+
+### Filter Closes
+
+*filterCloses*
+
+Filters close events. Automatically calls the `next()` middleware if event is not a close.
+
+#### Example
+
+```javascript
+app.use(withObservable(pipe(
+  filterCloses,
+  tap(({ctx}) => {
+    console.log('Client disconnected');
+  })
+)));
 ```
